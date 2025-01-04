@@ -18,7 +18,7 @@ public class Organization {
     private String description;
 
     @OneToOne
-    @JoinColumn(nullable = false, insertable = true, updatable = true)
+    @JoinColumn(name = "creatorId", nullable = false, insertable = true, updatable = true)
     private User creatorId;
 
     @Column(nullable = false, updatable = false)

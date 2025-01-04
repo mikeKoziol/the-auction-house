@@ -21,7 +21,7 @@ public class User {
     private String email;
 
     @OneToOne
-    @JoinColumn(nullable = true, insertable = true, updatable = true)
+    @JoinColumn(name = "organizationId", nullable = true, insertable = true, updatable = true)
     private Organization organizationId;
 
     @Column(nullable = false)
