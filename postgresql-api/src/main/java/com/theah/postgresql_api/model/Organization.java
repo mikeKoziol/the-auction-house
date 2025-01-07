@@ -24,8 +24,7 @@ public class Organization {
     @Column(nullable = false, updatable = false)
     private LocalDateTime dateCreated;
 
-    @Column(nullable = false)
-    private Boolean isActive;
+    public Organization() { }
 
     public Long getId() {
         return id;
@@ -66,13 +65,5 @@ public class Organization {
     public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
     }
-
-    public Boolean getIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
-    }  
 
 }

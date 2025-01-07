@@ -17,6 +17,7 @@ public class User {
     @Column(nullable = false)
     private String name;
 
+    // must check if a user isActive then for unique emails
     @Column(nullable = false, unique = true)
     private String email;
 
@@ -30,9 +31,6 @@ public class User {
     @Column(nullable = false, updatable = false)
     private LocalDateTime dateCreated;
 
-    @Column(nullable = false)
-    private Boolean isActive;
-
     public enum Role {
         admin,
         independent,
@@ -42,6 +40,21 @@ public class User {
         viewer
     }
 
+    // Constructors
+    public User() { }
+
+    // Creates independent users
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = Role.independent;
+
+        this.dateCreated = LocalDateTime.now();
+        this.organizationId = null;
+    }
+
+    // Getters + Setters
     public Long getId() {
         return id;
     }
@@ -96,14 +109,6 @@ public class User {
 
     public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
-    }
-
-    public Boolean getIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
     }
 
 }
