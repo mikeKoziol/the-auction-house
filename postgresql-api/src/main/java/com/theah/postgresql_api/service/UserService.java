@@ -2,6 +2,7 @@ package com.theah.postgresql_api.service;
 
 import com.theah.postgresql_api.model.*;
 import com.theah.postgresql_api.repository.*;
+import com.theah.postgresql_api.dto.*;
 
 import jakarta.transaction.Transactional;
 
@@ -36,7 +37,17 @@ public class UserService {
 
     /* SAVES + UPDATES */
 
-    public User saveNewUser(User newUser) {
+    public User saveNewUser(NewUserDTO newUserDTO) {
+        User newUser = new User(newUserDTO);
+
+        if (newUser.getRole() == null && newUser.getOrganizationId() == null) {
+            newUser.setRole(User.Role.independent);
+        }
+
+        if (userRepository.existsByEmail(newUser.getEmail())) {
+            throw new IllegalArgumentException("User with email " + newUser.getEmail() + " already exists");
+        }
+
         validateUser(newUser);
 
         try {
@@ -52,6 +63,10 @@ public class UserService {
 
     public User updateUser(User user) {
         validateUser(user);
+        
+        if (userRepository.existsByEmail(user.getEmail())) {
+            throw new IllegalArgumentException("User with email " + user.getEmail() + " already exists");
+        }
 
         try {
             return userRepository.save(user);
@@ -66,7 +81,7 @@ public class UserService {
 
     public void deleteUser(Long id) {
         if (!userRepository.existsById(id)) {
-            throw new IllegalArgumentException("User doesn't exist thus cannot be deleted");
+            throw new IllegalArgumentException("User doesn't exist");
         }
 
         /* 
@@ -85,7 +100,7 @@ public class UserService {
 
     /* HELPERS */
 
-    public void validateUser(User user) {
+    private void validateUser(User user) {
         if (user.getPassword() == null) {
             throw new IllegalArgumentException("User must have a password");
         } 
@@ -97,10 +112,6 @@ public class UserService {
         } 
         if (user.getRole() == null) {
             throw new IllegalArgumentException("User must have a role");
-        }
-
-        if (user.getId() != null && userRepository.existsByEmail(user.getEmail())) {
-            throw new IllegalArgumentException("User with email " + user.getEmail() + " already exists");
         }
 
         if (user.getOrganizationId() != null && user.getRole() == User.Role.independent) {

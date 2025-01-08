@@ -1,5 +1,7 @@
 package com.theah.postgresql_api.model;
 
+import com.theah.postgresql_api.dto.*;
+
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -52,6 +54,16 @@ public class User {
 
         this.dateCreated = LocalDateTime.now();
         this.organizationId = null;
+    }
+
+    public User(NewUserDTO newUserDTO) {
+        this.name = newUserDTO.getName();
+        this.email = newUserDTO.getEmail();
+        this.password = newUserDTO.getPassword();
+        this.role = newUserDTO.getRole();
+
+        this.dateCreated = LocalDateTime.now();
+        this.organizationId = newUserDTO.getOrganizationId();
     }
 
     // Getters + Setters
