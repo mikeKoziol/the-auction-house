@@ -38,19 +38,12 @@ public class UserService {
     /* SAVES + UPDATES */
 
     public User saveNewUser(NewUserDTO newUserDTO) {
-        User newUser = new User(newUserDTO);
-
-        if (newUser.getRole() == null && newUser.getOrganizationId() == null) {
-            newUser.setRole(User.Role.independent);
-        }
-
-        if (userRepository.existsByEmail(newUser.getEmail())) {
-            throw new IllegalArgumentException("User with email " + newUser.getEmail() + " already exists");
-        }
-
-        validateUser(newUser);
-
         try {
+            User newUser = new User(newUserDTO);
+            if (userRepository.existsByEmail(newUser.getEmail())) {
+                throw new IllegalArgumentException("User with email " + newUser.getEmail() + " already exists");
+            }
+            validateUser(newUser);
             User user = userRepository.save(newUser);
             // TODO: hash user id to be returned
             return user;

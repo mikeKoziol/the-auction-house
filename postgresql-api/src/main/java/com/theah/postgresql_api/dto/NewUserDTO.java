@@ -16,12 +16,6 @@ public class NewUserDTO {
     @NotBlank
     private String email;
 
-    // nullable
-    private Organization organizationId;
-
-    // nullable
-    private User.Role role;
-
     // Constructor
     public NewUserDTO() { }
 
@@ -49,23 +43,5 @@ public class NewUserDTO {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public Organization getOrganizationId() {
-        return organizationId;
-    }
-
-    public void setOrganizationId(Organization organizationId) {
-        this.organizationId = organizationId;
-    }
-
-    public User.Role getRole() {
-        return role;
-    }
-
-    public void setRole(User.Role role) {
-        this.role = role;
-    }
-
-
 
 }

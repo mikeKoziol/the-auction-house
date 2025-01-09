@@ -60,10 +60,10 @@ public class User {
         this.name = newUserDTO.getName();
         this.email = newUserDTO.getEmail();
         this.password = newUserDTO.getPassword();
-        this.role = newUserDTO.getRole();
+        this.role = Role.independent;
 
         this.dateCreated = LocalDateTime.now();
-        this.organizationId = newUserDTO.getOrganizationId();
+        this.organizationId = null;
     }
 
     // Getters + Setters

@@ -1,0 +1,22 @@
+/* Customized MUI textfield colors */
+
+.textfield-style .MuiOutlinedInput-root fieldset {
+    border-color: rgba(0, 0, 0, 0.75); /* Default border color */
+}
+
+.textfield-style .MuiOutlinedInput-root:hover fieldset {
+    border-color: rgba(0, 0, 0, 0.5); /* Border color on hover */
+}
+
+.textfield-style .MuiOutlinedInput-root.Mui-focused fieldset {
+    border-color: rgba(0, 0, 0, 1); /* Border color when focused */
+}
+
+/* Label customization */
+.textfield-style .MuiInputLabel-root {
+    color: rgba(0, 0, 0, 0.75); /* Default label color */
+}
+
+.textfield-style .MuiInputLabel-root.Mui-focused {
+    color: rgba(0, 0, 0, 1); /* Label color when focused */
+}

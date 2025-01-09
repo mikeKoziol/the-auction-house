@@ -2,6 +2,9 @@ import React from "react";
 
 import HomePage from "../pages/home.tsx";
 import TradePage from "../pages/trade.tsx";
+import LoginPage from "../pages/loginPages/login.tsx";
+import NewUserPage from "../pages/loginPages/new-user.tsx";
+import ResetPasswordPage from "../pages/loginPages/reset-password.tsx";
 
 
 type Route = {
@@ -17,5 +20,17 @@ export const ROUTES: Route[] = [
     {
         path: "/trade",
         element: <TradePage />
+    },
+    {
+        path: "/login",
+        element: <LoginPage />
+    },
+    {
+        path: "/login/new-user",
+        element: <NewUserPage />
+    },
+    {
+        path: "/login/reset-password",
+        element: <ResetPasswordPage />
     }
 ];
