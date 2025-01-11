@@ -3,8 +3,8 @@ import React from "react";
 import HomePage from "../pages/home.tsx";
 import TradePage from "../pages/trade.tsx";
 import LoginPage from "../pages/loginPages/login.tsx";
-import NewUserPage from "../pages/loginPages/new-user.tsx";
-import ResetPasswordPage from "../pages/loginPages/reset-password.tsx";
+import SignupPage from "../pages/loginPages/signup.tsx";
+import ForgotPasswordPage from "../pages/loginPages/forgot-password.tsx";
 
 
 type Route = {
@@ -26,11 +26,11 @@ export const ROUTES: Route[] = [
         element: <LoginPage />
     },
     {
-        path: "/login/new-user",
-        element: <NewUserPage />
+        path: "/login/signup",
+        element: <SignupPage />
     },
     {
-        path: "/login/reset-password",
-        element: <ResetPasswordPage />
+        path: "/login/forgot-password",
+        element: <ForgotPasswordPage />
     }
 ];

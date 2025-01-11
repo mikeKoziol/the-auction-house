@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 
 import "../../styles/TextFieldStyle.css";
 
-function LoginPage() {
+const LoginPage: React.FC = () => {
     let hasError = true;
 
     return (
@@ -44,6 +44,7 @@ function LoginPage() {
                 <TextField 
                     id="password-field" 
                     label="Password"
+                    type="password"
                     className="textfield-style"
                 />
 
@@ -93,7 +94,7 @@ function LoginPage() {
                         }
                     }
                 >
-                    Create a new account <Link to="/login/new-user">here</Link>
+                    Create a new account <Link to="/login/signup">here</Link>.
                 </Typography>
 
                 <Typography
@@ -104,11 +105,12 @@ function LoginPage() {
                         }
                     }
                 >
-                    Reset password <Link to="/login/reset-password">here</Link>
+                    Forgot your password? Click <Link to="/login/forgot-password">here</Link>.
                 </Typography>
 
             </Stack>
         </Stack>
     );
-}
+};
+
 export default LoginPage;

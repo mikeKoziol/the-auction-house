@@ -1,9 +1,11 @@
 import React from 'react';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+
 import { ROUTES } from "./utils/routes.tsx";
 import Header from "./components/header.tsx";
+import { AuthContextProvider } from './components/AuthContextProvider.tsx';
 
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import './App.css';
 
 /*
   TODO:
@@ -11,23 +13,25 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
     - 
 */
 
-function App() {
+const App: React.FC = () => {
 
   return (
     <div className="App">
-      <Router>
+      <AuthContextProvider>
+        <Router>
 
-        <Header />
+          <Header />
 
-        <Routes>
-          {ROUTES.map(({ path, element }) => (
-            <Route path={path} element={element} />
-          ))}
-        </Routes>
+          <Routes>
+            {ROUTES.map(({ path, element }) => (
+              <Route path={path} element={element} />
+            ))}
+          </Routes>
 
-      </Router>
+        </Router>
+      </AuthContextProvider>
     </div>
   );
-}
+};
 
 export default App;
