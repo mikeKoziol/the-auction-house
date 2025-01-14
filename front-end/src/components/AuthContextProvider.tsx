@@ -15,7 +15,7 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({ children }) =
     React.useEffect(() => {
         const storedUser = localStorage.getItem("authUser");
         if (storedUser) {
-            dispatch({ type: "LOGIN", payload: JSON.parse(storedUser) });
+            dispatch({ type: "LOGIN", payload: { user: JSON.parse(storedUser) } });
         }
     }, []);
 

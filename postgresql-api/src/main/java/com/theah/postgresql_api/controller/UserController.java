@@ -1,6 +1,7 @@
 package com.theah.postgresql_api.controller;
 
 import com.theah.postgresql_api.service.*;
+import com.theah.postgresql_api.utils.ApiResponseUtil;
 import com.theah.postgresql_api.model.*;
 import com.theah.postgresql_api.dto.*;
 import com.theah.postgresql_api.response.*;
@@ -32,73 +33,36 @@ public class UserController {
 
     @GetMapping("")
     public ResponseEntity<ApiResponse<List<User>>> getAllUsers() {
-        try {
-            List<User> allUsers = userService.getAllUsers();
-            String message = allUsers.isEmpty() ? "No users were found" : "Users were retrieved";
-            ApiResponse<List<User>> response = new ApiResponse<>(true, message, allUsers);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            String errMessage = e.getMessage();
-            ApiResponse<List<User>> errResponse = new ApiResponse<>(false, errMessage, null);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errResponse);
-        }
+        List<User> allUsers = userService.getAllUsers();
+        String message = allUsers.isEmpty() ? "No users were found" : "Users were retrieved";
+        return ApiResponseUtil.buildResponse(true, message, allUsers, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<Optional<User>>> getUserById(@PathVariable("id") Long id) {
-        try {
-            Optional<User> user = userService.getUserById(id);
-            String message = user.isPresent() ? "User was retrieved" : "No user was found";
-            ApiResponse<Optional<User>> response = new ApiResponse<>(true, message, user);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            String errMessage = e.getMessage();
-            ApiResponse<Optional<User>> errResponse = new ApiResponse<>(false, errMessage, null);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errResponse);
-        }
+        Optional<User> user = userService.getUserById(id);
+        String message = user.isPresent() ? "User was retrieved" : "No user was found";
+        return ApiResponseUtil.buildResponse(true, message, user, HttpStatus.OK);
     }
 
     @GetMapping("/{email}")
     public ResponseEntity<ApiResponse<Optional<User>>> getUserByEmail(@PathVariable("email") String email) {
-        try {
-            Optional<User> user = userService.getUserByEmail(email);
-            String message = user.isPresent() ? "User was retrieved" : "No user was found";
-            ApiResponse<Optional<User>> response = new ApiResponse<>(true, message, user);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            String errMessage = e.getMessage();
-            ApiResponse<Optional<User>> errResponse = new ApiResponse<>(false, errMessage, null);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errResponse);
-        }
+        Optional<User> user = userService.getUserByEmail(email);
+        String message = user.isPresent() ? "User was retrieved" : "No user was found";
+        return ApiResponseUtil.buildResponse(true, message, user, HttpStatus.OK);
     }
 
     // TODO: handle hashing id
     @PostMapping("")
     public ResponseEntity<ApiResponse<User>> createNewUser(@RequestBody NewUserDTO newUserDTO) {
-        try {
-            User newUser = userService.saveNewUser(newUserDTO);
-            String message = "Created new user";
-            ApiResponse<User> response = new ApiResponse<>(true, message, newUser);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            String errMessage = e.getMessage();
-            ApiResponse<User> errResponse = new ApiResponse<>(false, errMessage, null);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errResponse);
-        }
+        User newUser = userService.saveNewUser(newUserDTO);
+        return ApiResponseUtil.buildResponse(true, "Created new user", newUser, HttpStatus.OK);
     }
     
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<User>> deleteUser(@PathVariable("id") Long id) {
-        try {
-            userService.deleteUser(id);
-            String message = "Deleted user";
-            ApiResponse<User> response = new ApiResponse<>(true, message, null);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            String errMessage = e.getMessage();
-            ApiResponse<User> errResponse = new ApiResponse<>(false, errMessage, null);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errResponse);
-        }
+        userService.deleteUser(id);
+        return ApiResponseUtil.buildResponse(true, "Deleted user", null, HttpStatus.OK);
     }
     
 

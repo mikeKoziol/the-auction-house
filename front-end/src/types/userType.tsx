@@ -1,11 +1,13 @@
 
 
 // TODO: add in organizationId and role
-export type User = {
-    id: string;
+export interface User {
+    id: number;
     username: string;
     email: string;
     role: string;
+    organizationId: number | null;
+    dateCreated: string;
 };
 
 

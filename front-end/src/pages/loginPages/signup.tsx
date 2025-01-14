@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Navigate } from "react-router-dom";
 
 import { useSignup } from "../../hooks/useSignup.tsx";
 
@@ -19,6 +20,13 @@ const SignupPage: React.FC = () => {
 
     const { signup, isLoading, error } = useSignup();
 
+    // TODO: cleanup this line of code, move into the single return at the end
+    if (localStorage.getItem("authUser") !== null) {
+        return (
+            <Navigate to="/"/>
+        );
+    }
+
     const handleSubmit = async (event: React.SyntheticEvent): Promise<void> => {
         event.preventDefault();
 
@@ -29,7 +37,6 @@ const SignupPage: React.FC = () => {
 
         // send info to api and handle error or success
         await signup(username, email, password);
-        setDisplayError(error);
     };
 
     const usernameChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -153,7 +160,7 @@ const SignupPage: React.FC = () => {
                             }
                         }
                     >
-                        {displayError}
+                        {error || displayError}
                     </Typography>
                 </Stack>
 

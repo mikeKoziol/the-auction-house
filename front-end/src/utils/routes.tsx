@@ -5,6 +5,7 @@ import TradePage from "../pages/trade.tsx";
 import LoginPage from "../pages/loginPages/login.tsx";
 import SignupPage from "../pages/loginPages/signup.tsx";
 import ForgotPasswordPage from "../pages/loginPages/forgot-password.tsx";
+import { AuthRestrictedRoute } from "../components/AuthRestrictedRoute.tsx";
 
 
 type Route = {
@@ -15,15 +16,25 @@ type Route = {
 export const ROUTES: Route[] = [
     {
         path: "/",
-        element: <HomePage />
+        element: (
+            <AuthRestrictedRoute>
+                <HomePage />
+            </AuthRestrictedRoute>
+        )
     },
     {
         path: "/trade",
-        element: <TradePage />
+        element: (
+            <AuthRestrictedRoute>
+                <TradePage />
+            </AuthRestrictedRoute>
+        )
     },
     {
         path: "/login",
-        element: <LoginPage />
+        element: (
+                <LoginPage />
+        )
     },
     {
         path: "/login/signup",

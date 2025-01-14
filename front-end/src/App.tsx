@@ -5,7 +5,7 @@ import { ROUTES } from "./utils/routes.tsx";
 import Header from "./components/header.tsx";
 import { AuthContextProvider } from './components/AuthContextProvider.tsx';
 
-import './App.css';
+import './styles/App.css';
 
 /*
   TODO:

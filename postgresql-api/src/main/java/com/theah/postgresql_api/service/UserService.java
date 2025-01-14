@@ -47,6 +47,8 @@ public class UserService {
             User user = userRepository.save(newUser);
             // TODO: hash user id to be returned
             return user;
+        } catch (IllegalArgumentException e) {
+            throw e;
         } catch (DataIntegrityViolationException e) {
             throw new IllegalArgumentException("A database constraint was violated: " + e.getMessage());
         } catch (Exception e) {
@@ -55,14 +57,16 @@ public class UserService {
     }
 
     public User updateUser(User user) {
-        validateUser(user);
-        
-        if (userRepository.existsByEmail(user.getEmail())) {
-            throw new IllegalArgumentException("User with email " + user.getEmail() + " already exists");
-        }
-
         try {
+            validateUser(user);
+        
+            if (userRepository.existsByEmail(user.getEmail())) {
+                throw new IllegalArgumentException("User with email " + user.getEmail() + " already exists");
+            }
+
             return userRepository.save(user);
+        } catch (IllegalArgumentException e) {
+            throw e;
         } catch (DataIntegrityViolationException e) {
             throw new IllegalArgumentException("A database constraint was violated: " + e.getMessage());
         } catch (Exception e) {
@@ -97,8 +101,8 @@ public class UserService {
         if (user.getPassword() == null) {
             throw new IllegalArgumentException("User must have a password");
         } 
-        if (user.getName() == null) {
-            throw new IllegalArgumentException("User must have a name");
+        if (user.getUsername() == null) {
+            throw new IllegalArgumentException("User must have a username");
         } 
         if (user.getEmail() == null) {
             throw new IllegalArgumentException("User must have an email");
