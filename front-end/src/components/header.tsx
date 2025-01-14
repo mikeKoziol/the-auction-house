@@ -9,6 +9,7 @@ function Header () {
             <Link to="/"> Home </Link>
             <Link to="/trade"> Trade </Link>
             <Link to="/login"> Login </Link>
+            <Link to="/user/settings"> Settings </Link>
         </div>
     );
 }

@@ -6,6 +6,8 @@ export const baseUrl = "http://localhost:8080/api/";
 
 export const userUrl = baseUrl + "users";
 
+export const userLoginUrl = userUrl + "/login";
+
 export const userIdUrl = (id: string): string => {
     return userUrl + "/" + id;
 };
@@ -13,4 +15,6 @@ export const userIdUrl = (id: string): string => {
 export const userEmailUrl = (email: string): string => {
     return userUrl + "/" + email;
 };
+
+
 

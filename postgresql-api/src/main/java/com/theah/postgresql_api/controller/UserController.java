@@ -52,11 +52,18 @@ public class UserController {
         return ApiResponseUtil.buildResponse(true, message, user, HttpStatus.OK);
     }
 
-    // TODO: handle hashing id
+    // TODO: handle hashing
     @PostMapping("")
     public ResponseEntity<ApiResponse<User>> createNewUser(@RequestBody NewUserDTO newUserDTO) {
         User newUser = userService.saveNewUser(newUserDTO);
         return ApiResponseUtil.buildResponse(true, "Created new user", newUser, HttpStatus.OK);
+    }
+
+    // TODO: handle hashing
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<User>> loginUser(@RequestBody LoginDTO login) {
+        User user = userService.verifyUserLogin(login);
+        return ApiResponseUtil.buildResponse(true, "Valid user login", user, HttpStatus.OK);
     }
     
     @DeleteMapping("/{id}")

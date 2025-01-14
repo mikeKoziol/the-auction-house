@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useLogin } from "../../hooks/useLogin.tsx";
 
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
@@ -9,7 +10,25 @@ import Button from '@mui/material/Button';
 import "../../styles/TextFieldStyle.css";
 
 const LoginPage: React.FC = () => {
-    let hasError = true;
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+
+    const { login, isLoading, error } = useLogin();
+
+    const handleSubmit = async (event: React.SyntheticEvent): Promise<void> => {
+        event.preventDefault();
+
+        // send info to api and handle error or success
+        await login(email, password);
+    };
+
+    const emailChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        setEmail(event.target.value);
+    };
+
+    const passwordChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        setPassword(event.target.value);
+    };
 
     return (
         <Stack
@@ -38,6 +57,8 @@ const LoginPage: React.FC = () => {
                 <TextField 
                     id="email-field" 
                     label="Email"
+                    value={email}
+                    onChange={emailChange}
                     className="textfield-style"
                 />
 
@@ -45,6 +66,8 @@ const LoginPage: React.FC = () => {
                     id="password-field" 
                     label="Password"
                     type="password"
+                    value={password}
+                    onChange={passwordChange}
                     className="textfield-style"
                 />
 
@@ -56,6 +79,8 @@ const LoginPage: React.FC = () => {
                     <Button 
                         id="submit"
                         variant="contained"
+                        onClick={handleSubmit}
+                        disabled={isLoading}
                         sx={
                             {
                                 minWidth: "90px",
@@ -81,7 +106,7 @@ const LoginPage: React.FC = () => {
                             }
                         }
                     >
-                        {hasError && "error text"}
+                        {error}
                     </Typography>
                 </Stack>
 

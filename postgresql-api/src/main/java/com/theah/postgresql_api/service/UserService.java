@@ -74,6 +74,28 @@ public class UserService {
         }
     }
 
+    public User verifyUserLogin(LoginDTO login) {
+        try {
+            Optional<User> userLogin = userRepository.findByEmail(login.getEmail());
+            if (userLogin.isPresent()) {
+                User user = userLogin.get();
+                if (user.getPassword().equals(login.getPassword())) {
+                    return user;
+                } else {
+                    throw new IllegalArgumentException("Wrong password");
+                }
+            } else {
+                throw new IllegalArgumentException("User with email " + login.getEmail() + " doesn't exist");
+            }
+        } catch (IllegalArgumentException e) {
+            throw e;
+        } catch (DataIntegrityViolationException e) {
+            throw new IllegalArgumentException("A database constraint was violated: " + e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException("Unexpected error occured when saving user");
+        }
+    }
+
     /* DELETES */
 
     public void deleteUser(Long id) {

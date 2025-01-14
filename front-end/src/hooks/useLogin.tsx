@@ -1,19 +1,20 @@
 import { useState } from "react";
 import axios from "axios";
 
-import { userUrl } from "../utils/postgresqlApiUrls.tsx";
+import { userLoginUrl } from "../utils/postgresqlApiUrls.tsx";
 import { User } from "../types/userType.tsx";
 import { ApiResponse } from "../types/apiResponseType.tsx";
 import { useAuthContext } from "../hooks/useAuthContext.tsx";
 import { useNavigate } from "react-router-dom";
 
-interface useSignupState {
-    signup: (username: string, email: string, password: string) => Promise<void>;
+
+interface useLoginState {
+    login: (email: string, password: string) => Promise<void>;
     isLoading: boolean;
     error: string;
 };
 
-export const useSignup = (): useSignupState => {
+export const useLogin = (): useLoginState => {
     const [error, setError] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const navigate = useNavigate();
@@ -21,20 +22,20 @@ export const useSignup = (): useSignupState => {
     try {
         var { dispatch } = useAuthContext();
     } catch (error: any) {
-        throw Error("Signup must be called within AuthContext");
+        throw Error("Login must be called within AuthContext");
     }
     
 
-    const signup = async (username: string, email: string, password: string): Promise<void> => {
+    const login = async (email: string, password: string): Promise<void> => {
         setIsLoading(true);
         setError("");
 
-        const signupUser = { username, email, password };
+        const loginUser = { email, password };
 
-        axios.post<ApiResponse<User>>(userUrl, signupUser)
+        axios.post<ApiResponse<User>>(userLoginUrl, loginUser)
             .then(({ data }) => {
                 if (data.data === null) {
-                    setError("Unable to create user");
+                    setError("Unable to login user");
                 } else {
                     localStorage.setItem("authUser", JSON.stringify(data.data));
                     dispatch({ type: "LOGIN", payload: { user: data.data } });
@@ -55,7 +56,7 @@ export const useSignup = (): useSignupState => {
             });
     };
 
-    return { signup, isLoading, error };
+    return { login, isLoading, error };
 };
 
 
