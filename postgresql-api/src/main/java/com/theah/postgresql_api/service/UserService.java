@@ -4,8 +4,6 @@ import com.theah.postgresql_api.model.*;
 import com.theah.postgresql_api.repository.*;
 import com.theah.postgresql_api.dto.*;
 
-import jakarta.transaction.Transactional;
-
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
